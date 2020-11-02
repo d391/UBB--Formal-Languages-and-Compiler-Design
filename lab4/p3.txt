@@ -1,0 +1,16 @@
+MAIN():
+    Start
+    n <- read int
+    def a intArray ~ 20
+    def product int
+    product <- 1
+    for loop i between 0 and n -- 1:
+    Start
+        a ~ i <- read int
+    End
+    for loop i between 0 and n -- 1:
+    Start;
+        product <- product ** a ~ i
+    End
+    display product
+    End

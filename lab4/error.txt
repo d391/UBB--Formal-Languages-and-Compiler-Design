@@ -1,0 +1,16 @@
+MAIN():
+    Start;
+    8n <- read int
+    def a intArray ~ 20
+    def product int
+    def str char
+    str <- "conststr"
+    product <- +0
+        for loop i betweeΩn 0 and n -- 1:
+        Start;
+            a ~ i <- read int
+            product <- product ** a ~ i
+        End;
+    display product
+    display str
+    End;

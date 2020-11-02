@@ -1,0 +1,15 @@
+MAIN():
+    Start;
+        def a int
+        def b int
+        a <- read int
+        b <- read int
+        if a << b:
+        Start;
+            display a
+        End;
+        else:
+        Start;
+            display b
+        End;
+    End;

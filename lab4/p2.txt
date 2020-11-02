@@ -1,0 +1,15 @@
+MAIN():
+    Start;
+        def n int
+        n <- read n
+        def counter int
+        counter <- 0
+        for loop i between 2 and n // 2:
+        Start;
+            if n %% i == 0 && i %% 2 != 0 == true:
+            Start;
+                incr counter
+            End;
+        End;
+        display counter
+    End;
