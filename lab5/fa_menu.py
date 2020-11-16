@@ -4,7 +4,8 @@ class FAmenu:
         self.initialState = ""
         self.finalStates = []
         self.alphabet = []
-        self.transitions = {}
+        self.transitionsDet = {}
+        self.transitionsNeDet = []
         self.seq = []
         self.readFA()
 
@@ -32,7 +33,8 @@ class FAmenu:
         line = fafile.readline()
         while line != "Sequence:\n":
             tokens = line.split()
-            self.transitions[(tokens[0], tokens[1])] = tokens[2]
+            self.transitionsDet[(tokens[0], tokens[1])] = tokens[2]
+            self.transitionsNeDet.append((tokens[0], tokens[1], tokens[2]))
             line = fafile.readline()
 
         self.seq = fafile.readline().split()
@@ -52,12 +54,17 @@ class FAmenu:
         state = self.initialState
         while len(self.seq) > 0:
             transition = (state, self.seq.pop(0))
-            if transition in self.transitions.keys():
-                state = self.transitions[transition]
+            if transition in self.transitionsDet.keys():
+                state = self.transitionsDet[transition]
             else:
                 return False
         return state in self.finalStates
 
+    def verifyDet(self):
+        return len(self.transitionsDet) == len(self.transitionsNeDet)
+
+    def printTransitions(self, t):
+        print("(" + t[0] + ", " + t[1] + ") -> " + t[2] + "\n")
 
     def menu(self):
         while 1:
@@ -72,13 +79,17 @@ class FAmenu:
             if choice == 3:
                 print(self.finalStates)
             if choice == 4:
-                print(self.transitions)
+                for t in self.transitionsNeDet:
+                    self.printTransitions(t)
             if choice == 5:
-                print(self.seq)
-                if self.verifySeq():
-                    print("The sequence is verified")
+                if self.verifyDet():
+                    print(self.seq)
+                    if self.verifySeq():
+                        print("The sequence is verified")
+                    else:
+                        print("The sequence is NOT verified")
                 else:
-                    print("The sequence is NOT verified")
+                    print("The FA is not a DFA")
 
 
 if __name__ == "__main__":
