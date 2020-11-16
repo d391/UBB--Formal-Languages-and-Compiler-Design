@@ -1,0 +1,18 @@
+States:
+p
+q
+r
+Initial state:
+p
+Final states:
+r
+Alphabet:
+a
+b
+Transitions:
+p a q
+q a q
+q b r
+p b r
+Sequence:
+a a b
