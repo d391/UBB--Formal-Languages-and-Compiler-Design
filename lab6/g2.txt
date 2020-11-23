@@ -1,0 +1,46 @@
+Rules:
+Program -> def Decllist ; cmpdstmt .
+Decllist -> Declaration
+Decllist -> Declaration ; decllist
+Declaration -> Type Id
+Type -> int
+Type -> bool
+Type -> char
+Type -> real
+Type -> ArrayType
+ArrayType -> intArray~
+ArrayType -> charArray~
+ArrayType -> realArray~
+ArrayType -> array~
+Cmpdtstmt -> Start StmtList End
+StmtList -> Stmt
+StmtList -> Stmt ; StmtList
+Stmt -> SimpleStmt
+Stmt -> StructStmt
+SimpleStmt -> AssignStmt
+SimpleStmt -> Iostmt
+AssignStmt -> Id <- Expr
+Expr -> Id
+Expr -> Num
+Expr -> Const
+Expr -> Expr Operand Expr
+Iostmt -> read id
+Iostmt -> display id
+StructStmt -> Cmpdstmt
+StructStmt -> Ifstmt
+StructStmt -> Forstmt
+Ifstmt -> if Condition : Start Stmt End [ else Start Stmt End ]
+Forstmt -> forloop Condition [ between Expr and Expr : ]
+Condition -> Expr Relation Expr
+Relation -> <<
+Relation -> >>
+Relation -> <<=
+Relation -> >>=
+Relation -> <<>>
+Relation -> ==
+Id -> Letter
+Id -> Letter { letter } { digit }
+Nonterminal symbols:
+Program Decllist Cmpdstmt Declaration Type ArrayType stmtList stmt simplestmt assignstmt expr iostmt structstmt ifstmt forstmt condition relation
+Terminal symbols:
+def int bool char real intArray realArray charArray array Start End <- read display : forloop between and << >> <<= >>= <<>> ==
