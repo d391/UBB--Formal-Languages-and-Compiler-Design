@@ -1,38 +1,46 @@
 class Grammar:
-    def __init__(self):
-        self.nonterminal_symbols = []
-        self.terminal_symbols = []
-        self.productions = []
-        self.readFromFile()
+    def __init__(self, _nonterminal_symbols, _terminal_symbols, _productions, _start_terminal):
+        self.nonterminal_symbols = _nonterminal_symbols
+        self.terminal_symbols = _terminal_symbols
+        self.productions = _productions
+        self.start_terminal = _start_terminal
 
-    def readFromFile(self):
-        file = open("g1.txt", "r")
-        file.readline()
-        line = file.readline()
-        while line != "Nonterminal symbols:\n":
-            tokens = line.strip('\n').split(" -> ")
-            self.productions.append(tokens)
-            line = file.readline()
-        line = file.readline()
-        self.nonterminal_symbols = line.strip("\n").split(" ")
-        file.readline()
-        line = file.readline()
-        self.terminal_symbols = line.strip("\n").split(" ")
+    @staticmethod
+    def read_from_file(filename):
+        with open(filename) as file:
+            nonterminal_symbols = Grammar.parse_line(file.readline())
+            terminal_symbols = Grammar.parse_line(file.readline())
+            start_terminal = Grammar.parse_line(file.readline())
+            productions = Grammar.parse_productions(Grammar.parse_line(''.join([line for line in file])))
+        return Grammar(nonterminal_symbols, terminal_symbols, productions, start_terminal)
+
+    @staticmethod
+    def parse_line(line):
+        return [element.strip() for element in line.strip().split('=')[1].strip()[1:-1].split(',')]
+
+    @staticmethod
+    def parse_productions(productions):
+        result = []
+        for rule in productions:
+            [lhs, rhs] = rule.strip().split('->')
+            results = rhs.strip().split('|')
+            for res in results:
+                result.append((lhs.strip(), res.split()))
+        return result
+
+    def find_production(self, symbol):
+        result = []
+        for production in self.productions:
+            if production[0] == symbol:
+                result.append(production[1])
+        return result
 
     def menu(self):
-        print("0 - exit")
+        print("0 - Exit")
         print("1 - Productions")
         print("2 - Nonterminal symbols")
         print("3 - Terminal symbols")
         print("4 - Productions for a given nonterminal")
-
-    def findProductions(self, nt):
-        resultProds = []
-        for prod in self.productions:
-            if nt is prod[0]:
-                resultProds.append(prod[1])
-        return resultProds
-
 
     def printMenu(self):
         while True:
@@ -48,9 +56,4 @@ class Grammar:
                 print(self.terminal_symbols)
             if choice == 4:
                 nt = input("Give nonterminal: ")
-                print(self.findProductions(nt))
-
-
-if __name__ == "__main__":
-    g = Grammar()
-    g.printMenu()
+                print(self.find_production(nt))

@@ -1,13 +1,7 @@
-Rules:
-S -> PV
-P -> a N
-N -> boy
-N -> dog
-V -> QC
-Q -> has
-C -> BN
-B -> a
-Nonterminal symbols:
-S P V N Q C B
-Terminal symbols:
-a boy dog has
+N = {S, A, B}
+E = {a, b, c}
+S = { S, },
+P = {
+    S -> A A,
+    A -> a A | b
+}
